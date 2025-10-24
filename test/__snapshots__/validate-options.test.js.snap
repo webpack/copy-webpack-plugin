@@ -4,7 +4,7 @@ exports[`validate options should throw an error on the "options" option with "{"
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.options.concurrency should be a number.
    -> Limits the number of simultaneous requests to fs.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#concurrency"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#concurrency"
 `;
 
 exports[`validate options should throw an error on the "options" option with "{"unknown":true}" value 1`] = `
@@ -33,14 +33,14 @@ exports[`validate options should throw an error on the "patterns" option with "[
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].noErrorOnMissing should be a boolean.
    -> Doesn't generate an error on missing file(s).
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#noerroronmissing"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#noerroronmissing"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"","to":"dir","context":"context"}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].from should be a non-empty string.
    -> Glob or path from where we copy files.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#from"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#from"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"dir","info":"string"}]" value 1`] = `
@@ -51,7 +51,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
     * options.patterns[0].info should be one of these:
       object { … } | function
       -> Allows to add assets info.
-      -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#info
+      -> Read more at https://github.com/webpack/copy-webpack-plugin#info
       Details:
        * options.patterns[0].info should be an object:
          object { … }
@@ -66,7 +66,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
     * options.patterns[0].info should be one of these:
       object { … } | function
       -> Allows to add assets info.
-      -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#info
+      -> Read more at https://github.com/webpack/copy-webpack-plugin#info
       Details:
        * options.patterns[0].info should be an object:
          object { … }
@@ -77,14 +77,14 @@ exports[`validate options should throw an error on the "patterns" option with "[
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].filter should be an instance of function.
    -> Allows to filter copied assets.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#filter"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#filter"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","context":"context","force":"true"}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].force should be a boolean.
    -> Overwrites files already in 'compilation.assets' (usually added by other plugins/loaders).
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#force"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#force"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","context":"context","toType":"foo"}]" value 1`] = `
@@ -92,7 +92,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
  - options.patterns[0].toType should be one of these:
    "dir" | "file" | "template"
    -> Determinate what is to option - directory, file or template.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#totype"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#totype"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","context":"context","transform":{"foo":"bar"}}]" value 1`] = `
@@ -109,7 +109,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
     * options.patterns[0].transform should be one of these:
       function | object { transformer?, cache? }
       -> Allows to modify the file contents.
-      -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#transform
+      -> Read more at https://github.com/webpack/copy-webpack-plugin#transform
       Details:
        * options.patterns[0].transform should be an instance of function.
        * options.patterns[0].transform should be an object:
@@ -120,35 +120,35 @@ exports[`validate options should throw an error on the "patterns" option with "[
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].transformAll should be an instance of function.
    -> Allows you to modify the contents of multiple files and save the result to one file.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#transformall"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#transformall"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","context":true}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].context should be a string.
    -> A path that determines how to interpret the 'from' path.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#context"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#context"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","priority":"5"}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].priority should be a number.
    -> Allows to specify the priority of copying files with the same destination name.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#priority"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#priority"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir","priority":true}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].priority should be a number.
    -> Allows to specify the priority of copying files with the same destination name.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#priority"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#priority"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":"dir"}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].priority should be a number.
    -> Allows to specify the priority of copying files with the same destination name.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#priority"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#priority"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":"test.txt","to":true,"context":"context"}]" value 1`] = `
@@ -159,7 +159,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
     * options.patterns[0].to should be one of these:
       string | function
       -> Output path.
-      -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#to
+      -> Read more at https://github.com/webpack/copy-webpack-plugin#to
       Details:
        * options.patterns[0].to should be a string.
        * options.patterns[0].to should be an instance of function."
@@ -169,14 +169,14 @@ exports[`validate options should throw an error on the "patterns" option with "[
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].from should be a non-empty string.
    -> Glob or path from where we copy files.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#from"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#from"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{"from":true,"to":"dir","context":"context"}]" value 1`] = `
 "Invalid options object. Copy Plugin has been initialized using an options object that does not match the API schema.
  - options.patterns[0].from should be a non-empty string.
    -> Glob or path from where we copy files.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#from"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#from"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "[{}]" value 1`] = `
@@ -184,7 +184,7 @@ exports[`validate options should throw an error on the "patterns" option with "[
  - options.patterns[0] misses the property 'from'. Should be:
    non-empty string
    -> Glob or path from where we copy files.
-   -> Read more at https://github.com/webpack-contrib/copy-webpack-plugin#from"
+   -> Read more at https://github.com/webpack/copy-webpack-plugin#from"
 `;
 
 exports[`validate options should throw an error on the "patterns" option with "{}" value 1`] = `

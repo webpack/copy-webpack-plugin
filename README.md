@@ -1321,10 +1321,10 @@ If you are new here, please take a moment to review our contributing guidelines 
 [npm-url]: https://npmjs.com/package/copy-webpack-plugin
 [node]: https://img.shields.io/node/v/copy-webpack-plugin.svg
 [node-url]: https://nodejs.org
-[tests]: https://github.com/webpack-contrib/copy-webpack-plugin/workflows/copy-webpack-plugin/badge.svg
-[tests-url]: https://github.com/webpack-contrib/copy-webpack-plugin/actions
-[cover]: https://codecov.io/gh/webpack-contrib/copy-webpack-plugin/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/webpack-contrib/copy-webpack-plugin
+[tests]: https://github.com/webpack/copy-webpack-plugin/workflows/copy-webpack-plugin/badge.svg
+[tests-url]: https://github.com/webpack/copy-webpack-plugin/actions
+[cover]: https://codecov.io/gh/webpack/copy-webpack-plugin/branch/main/graph/badge.svg
+[cover-url]: https://codecov.io/gh/webpack/copy-webpack-plugin
 [discussion]: https://img.shields.io/github/discussions/webpack/webpack
 [discussion-url]: https://github.com/webpack/webpack/discussions
 [size]: https://packagephobia.now.sh/badge?p=copy-webpack-plugin

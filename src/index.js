@@ -286,7 +286,7 @@ class CopyPlugin {
           }
         }
 
-        // To prevent double compilation during aggregation (initial run) - https://github.com/webpack-contrib/copy-webpack-plugin/issues/806.
+        // To prevent double compilation during aggregation (initial run) - https://github.com/webpack/copy-webpack-plugin/issues/806.
         // On first run we don't know if the glob exists or not, adding the dependency to the context dependencies triggers the `removed` event during aggregation.
         // To prevent this behavior we should add the glob to the missing dependencies if the glob doesn't exist,
         // otherwise we should add the dependency to the context dependencies.
@@ -852,7 +852,7 @@ class CopyPlugin {
 
           await throttleAll(
             // Should be enough, it might be worth considering an option for this, but in real configurations it usually doesn't exceed this value
-            // https://github.com/webpack-contrib/copy-webpack-plugin/issues/627
+            // https://github.com/webpack/copy-webpack-plugin/issues/627
             2,
             this.patterns.map((item, index) => async () => {
               /**
