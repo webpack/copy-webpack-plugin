@@ -1311,7 +1311,7 @@ We welcome all contributions!
 
 If you are new here, please take a moment to review our contributing guidelines before submitting issues or pull requests.
 
-[CONTRIBUTING](./.github/CONTRIBUTING.md)
+[CONTRIBUTING](https://github.com/webpack/copy-webpack-plugin?tab=contributing-ov-file#contributing)
 
 ## License
 
