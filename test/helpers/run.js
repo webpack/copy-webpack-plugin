@@ -25,7 +25,7 @@ const ignore = [
 ];
 
 /**
- * @param {{ patterns?: Array<unknown>, compiler?: unknown, preCopy?: unknown, breakContenthash?: unknown, withChildCompilation?: unknown, expectedErrors?: Array<Error>, expectedWarnings?: Array<Error> }} opts Options for running the test
+ * @param {{ patterns?: unknown[], compiler?: unknown, preCopy?: unknown, breakContenthash?: unknown, withChildCompilation?: unknown, expectedErrors?: Error[], expectedWarnings?: Error[] }} opts Options for running the test
  * @returns {Promise<{ compilation: unknown, compiler: unknown, stats: unknown }>} Resolves with compilation, compiler, and stats
  */
 function run(opts) {
@@ -96,7 +96,7 @@ function run(opts) {
 }
 
 /**
- * @param {{ expectedAssetKeys?: Array<string>, expectedAssetContent?: { [key: string]: unknown }, skipAssetsTesting?: boolean }} opts Options for running the test
+ * @param {{ expectedAssetKeys?: string[], expectedAssetContent?: { [key: string]: unknown }, skipAssetsTesting?: boolean }} opts Options for running the test
  * @returns {Promise<void>} Resolves when the test is complete
  */
 function runEmit(opts) {
@@ -163,7 +163,7 @@ const delay = (ms) =>
   });
 
 /**
- * @param {{ patterns?: Array<unknown>, options?: unknown, newFileLoc1?: string, newFileLoc2?: string, expectedAssetKeys?: Array<string> }} opts Options for running the test
+ * @param {{ patterns?: unknown[], options?: unknown, newFileLoc1?: string, newFileLoc2?: string, expectedAssetKeys?: string[] }} opts Options for running the test
  * @returns {Promise<void>} Resolves when the test is complete
  */
 function runChange(opts) {
