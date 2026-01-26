@@ -107,7 +107,7 @@ const getTinyGlobby = memoize(() => require("tinyglobby"));
  */
 
 /**
- * @typedef { Record<string, unknown> | ((item: { absoluteFilename: string, sourceFilename: string, filename: string, toType: ToType }) => Record<string, unknown>) } Info
+ * @typedef {Record<string, unknown> | ((item: { absoluteFilename: string, sourceFilename: string, filename: string, toType: ToType }) => Record<string, unknown>)} Info
  */
 
 /**
@@ -311,7 +311,7 @@ class CopyPlugin {
    * @param {number} concurrency /maximum number of concurrent operations
    * @param {ObjectPattern & { context: string }} pattern the pattern to process
    * @param {number} index the index of the pattern in the patterns array
-   * @returns {Promise<Array<CopiedResult | undefined> | undefined>} processes the pattern and returns an array of copied results
+   * @returns {Promise<(CopiedResult | undefined)[] | undefined>} processes the pattern and returns an array of copied results
    */
   static async glob(
     globby,
@@ -461,7 +461,7 @@ class CopyPlugin {
     );
 
     /**
-     * @type {Array<CopiedResult | undefined>}
+     * @type {(CopiedResult | undefined)[]}
      */
     let copiedResult;
 
@@ -870,7 +870,7 @@ class CopyPlugin {
               pattern.context = context;
 
               /**
-               * @type {Array<CopiedResult | undefined> | undefined}
+               * @type {(CopiedResult | undefined)[] | undefined}
                */
               let copiedResult;
 
@@ -897,7 +897,7 @@ class CopyPlugin {
               }
 
               /**
-               * @type {Array<CopiedResult>}
+               * @type {CopiedResult[]}
                */
               let filteredCopiedResult = copiedResult.filter(
                 /**

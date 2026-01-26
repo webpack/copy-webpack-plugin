@@ -16,8 +16,8 @@ export function readFile(
   inputFileSystem: InputFileSystem,
   path: string,
 ): Promise<string | Buffer>;
-/** @typedef {import("webpack").Compilation["inputFileSystem"] } InputFileSystem */
-/** @typedef {import("fs").Stats } Stats */
+/** @typedef {import("webpack").Compilation["inputFileSystem"]} InputFileSystem */
+/** @typedef {import("fs").Stats} Stats */
 /**
  * @param {InputFileSystem} inputFileSystem the input file system to use for reading the file stats.
  * @param {string} path the path to the file or directory to get stats for.

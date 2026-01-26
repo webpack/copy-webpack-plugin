@@ -1,5 +1,5 @@
-/** @typedef {import("webpack").Compilation["inputFileSystem"] } InputFileSystem */
-/** @typedef {import("fs").Stats } Stats */
+/** @typedef {import("webpack").Compilation["inputFileSystem"]} InputFileSystem */
+/** @typedef {import("fs").Stats} Stats */
 
 /**
  * @param {InputFileSystem} inputFileSystem the input file system to use for reading the file stats.
