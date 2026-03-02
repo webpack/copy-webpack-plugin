@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [14.0.0](https://github.com/webpack/copy-webpack-plugin/compare/v13.0.1...v14.0.0) (2026-03-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimum supported `Node.js` version is `20.9.0` ([#819](https://github.com/webpack/copy-webpack-plugin/issues/819)) ([2881203](https://github.com/webpack/copy-webpack-plugin/commit/28812036cea4aa3e76e75597b0cd72eec53fe70d))
+
+### Bug Fixes
+
+* update `serialize-javascript` to fix security problems
+
 ### [13.0.1](https://github.com/webpack-contrib/copy-webpack-plugin/compare/v13.0.0...v13.0.1) (2025-08-12)
 
 
