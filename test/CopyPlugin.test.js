@@ -453,7 +453,7 @@ describe("CopyPlugin", () => {
         ],
       })
         .then(({ compiler, stats }) => {
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
         })
@@ -747,7 +747,7 @@ describe("CopyPlugin", () => {
       })
         .then(({ compiler, stats }) => {
           // expect(spy).toHaveBeenCalledTimes(1);
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
 
@@ -1096,7 +1096,7 @@ describe("CopyPlugin", () => {
       }
 
       expect(
-        assetsInfo.sort((a, b) => {
+        assetsInfo.toSorted((a, b) => {
           if (a.name < b.name) {
             return -1;
           }
@@ -1129,9 +1129,9 @@ describe("CopyPlugin", () => {
             .map((entry) =>
               entry.args[0].replaceAll("\\", "/").split(root).join("."),
             )
-            .sort();
+            .toSorted();
 
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
           expect({ logs }).toMatchSnapshot("logs");
@@ -1162,9 +1162,9 @@ describe("CopyPlugin", () => {
             .map((entry) =>
               entry.args[0].replaceAll("\\", "/").split(root).join("."),
             )
-            .sort();
+            .toSorted();
 
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
           expect({ logs }).toMatchSnapshot("logs");
@@ -1197,9 +1197,9 @@ describe("CopyPlugin", () => {
             .map((entry) =>
               entry.args[0].replaceAll("\\", "/").split(root).join("."),
             )
-            .sort();
+            .toSorted();
 
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
           expect({ logs }).toMatchSnapshot("logs");
@@ -1228,9 +1228,9 @@ describe("CopyPlugin", () => {
             .map((entry) =>
               entry.args[0].replaceAll("\\", "/").split(root).join("."),
             )
-            .sort();
+            .toSorted();
 
-          expect(Object.keys(readAssets(compiler, stats)).sort()).toEqual(
+          expect(Object.keys(readAssets(compiler, stats)).toSorted()).toEqual(
             expectedAssetKeys,
           );
           expect({ logs }).toMatchSnapshot("logs");

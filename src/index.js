@@ -1032,7 +1032,7 @@ class CopyPlugin {
             }),
           );
 
-          const copiedResult = [...copiedResultMap.entries()].sort(
+          const copiedResult = [...copiedResultMap.entries()].toSorted(
             (a, b) => a[0] - b[0],
           );
 
@@ -1041,7 +1041,9 @@ class CopyPlugin {
           for (const result of copiedResult
             .reduce(
               (acc, val) => {
-                const sortedByIndex = [...val[1]].sort((a, b) => a[0] - b[0]);
+                const sortedByIndex = [...val[1]].toSorted(
+                  (a, b) => a[0] - b[0],
+                );
 
                 for (const [, item] of sortedByIndex) {
                   acc = [...acc, ...item];

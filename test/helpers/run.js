@@ -109,9 +109,9 @@ function runEmit(opts) {
       expect(
         Object.keys(compilation.assets)
           .filter((a) => a !== "main.js")
-          .sort(),
+          .toSorted(),
       ).toEqual(
-        opts.expectedAssetKeys.sort().map(removeIllegalCharacterForWindows),
+        opts.expectedAssetKeys.toSorted().map(removeIllegalCharacterForWindows),
       );
     } else {
       delete compilation.assets["main.js"];
@@ -214,15 +214,17 @@ function runChange(opts) {
             opts.expectedAssetKeys.length > 0 &&
             changedFiles.length > 0
           ) {
-            expect(changedFiles.sort()).toEqual(
+            expect(changedFiles.toSorted()).toEqual(
               opts.expectedAssetKeys
-                .sort()
+                .toSorted()
                 .map(removeIllegalCharacterForWindows),
             );
           }
 
           if (lastFiles.length > 0) {
-            expect(lastFiles.sort()).toEqual(Object.keys(assetsAfter).sort());
+            expect(lastFiles.toSorted()).toEqual(
+              Object.keys(assetsAfter).toSorted(),
+            );
           }
 
           resolve();
