@@ -442,6 +442,8 @@ describe("globOptions option", () => {
       .then(done)
       .catch(done);
   });
+
+  // windows-style
   it("should handle windows-style glob paths", (done) =>{
     runEmit({
       expectedAssetKeys:[
@@ -453,7 +455,7 @@ describe("globOptions option", () => {
         {
            from: "directory\\**\\*.txt",
            context: FIXTURES_DIR_NORMALIZED,
-        }, // windows-style
+        },
       ],
     })
     .then(done)

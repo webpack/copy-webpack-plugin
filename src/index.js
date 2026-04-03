@@ -425,7 +425,7 @@ class CopyPlugin {
       }
 
     }
-    console.log(`Final glob: ${glob}`);
+    // console.log(`Final glob: ${glob}`);
 
     logger.log(`begin globbing '${glob}'...`);
 

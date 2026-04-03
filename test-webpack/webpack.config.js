@@ -1,5 +1,5 @@
 const path = require("path");
-const CopyPlugin = require("../src"); // 👈 important
+const CopyPlugin = require("../src");
 
 module.exports = {
   mode: "production",
