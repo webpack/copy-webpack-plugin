@@ -381,9 +381,16 @@ class CopyPlugin {
     // Will work when https://github.com/SuperchupuDev/tinyglobby/issues/81 will be resolved, so let's pass it to `tinyglobby` right now
     // @ts-expect-error - tinyglobby types are incomplete
     globOptions.fs = inputFileSystem;
+    /**
+     * @param {string} inputPath
+     * @returns {string}
+     */
+
+    const normalizeToPosix = (inputPath) => {
+      return inputPath.replace(/\\/g, "/");
+    };
 
     let glob;
-
     switch (typeOfFrom) {
       case "dir":
         pattern.context = absoluteFrom;
@@ -406,14 +413,19 @@ class CopyPlugin {
         break;
       case "glob":
       default: {
+        const normalizedFrom  = normalizeToPosix(pattern.from);
         glob = path.isAbsolute(pattern.from)
-          ? pattern.from
+          ? normalizedFrom       //                               pattern.from
           : path.posix.join(
-              getTinyGlobby().escapePath(getNormalizePath()(pattern.context)),
-              pattern.from,
+              getTinyGlobby().escapePath(
+                getNormalizePath()(pattern.context)
+              ),
+              normalizedFrom,
             );
       }
+
     }
+    console.log(`Final glob: ${glob}`);
 
     logger.log(`begin globbing '${glob}'...`);
 
@@ -846,8 +858,17 @@ class CopyPlugin {
 
           logger.log("starting to add additional assets...");
 
-          const concurrency = this.options.concurrency || 100;
-          /** @type {Map<number, Map<number, CopiedResult[]>>} */
+          // const concurrency = this.options.concurrency || 100;
+          // /** @type {Map<number, Map<number, CopiedResult[]>>} */
+
+          /**improve concurrency handling using CPU-based dynamic scaling **/
+
+          const os = require("os");
+          const DEFAULT_MAX_CONCURRENCY = 50;
+          const cpuCount    = os.cpus()?.length || 1;
+          const concurrency =
+              this.options.concurrency ??
+              Math.max(1, Math.min(cpuCount * 2, DEFAULT_MAX_CONCURRENCY));
           const copiedResultMap = new Map();
 
           await throttleAll(

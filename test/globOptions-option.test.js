@@ -442,4 +442,23 @@ describe("globOptions option", () => {
       .then(done)
       .catch(done);
   });
+  it("should handle windows-style glob paths", (done) =>{
+    runEmit({
+      expectedAssetKeys:[
+        "directory/directoryfile.txt",
+        "directory/nested/deep-nested/deepnested.txt",
+        "directory/nested/nestedfile.txt",
+      ],
+      patterns: [
+        {
+           from: "directory\\**\\*.txt",
+           context: FIXTURES_DIR_NORMALIZED,
+        }, // windows-style
+      ],
+    })
+    .then(done)
+    .catch(done);
+
+  });
+
 });
