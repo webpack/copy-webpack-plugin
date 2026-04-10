@@ -5,10 +5,21 @@
       "additionalProperties": false,
       "properties": {
         "from": {
-          "type": "string",
-          "description": "Glob or path from where we copy files.",
-          "link": "https://github.com/webpack/copy-webpack-plugin#from",
-          "minLength": 1
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          ],
+          "description": "Glob or path (or array of paths) from where we copy files.",
+          "link": "https://github.com/webpack/copy-webpack-plugin#from"
         },
         "to": {
           "anyOf": [

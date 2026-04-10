@@ -874,22 +874,67 @@ class CopyPlugin {
                */
               let copiedResult;
 
-              try {
-                copiedResult = await CopyPlugin.glob(
-                  globby,
-                  compiler,
-                  compilation,
-                  logger,
-                  cache,
-                  concurrency,
-                  /** @type {ObjectPattern & { context: string }} */
-                  (pattern),
-                  index,
-                );
-              } catch (error) {
-                compilation.errors.push(/** @type {Error} */ (error));
+              const fromList = Array.isArray(pattern.from)
+                ? pattern.from
+                : [pattern.from];
 
-                return;
+              if (fromList.length === 0) {
+                copiedResult = [];
+              } else if (fromList.length > 1) {
+                const results = [];
+
+                for (let i = 0; i < fromList.length; i++) {
+                  const from = fromList[i];
+                  const arrayPattern = { ...pattern, from };
+
+                  try {
+                    const result = await CopyPlugin.glob(
+                      globby,
+                      compiler,
+                      compilation,
+                      logger,
+                      cache,
+                      concurrency,
+                      /** @type {ObjectPattern & { context: string }} */
+                      (arrayPattern),
+                      index * 1000 + i, // Unique index for caching
+                    );
+
+                    if (result) {
+                      results.push(...result);
+                    }
+                  } catch (error) {
+                    compilation.errors.push(/** @type {Error} */ (error));
+
+                    // Continue with next from in array
+                    continue;
+                  }
+                }
+
+                copiedResult = results;
+              } else {
+                const singlePattern = {
+                  ...pattern,
+                  from: /** @type {string} */ (fromList[0]),
+                };
+
+                try {
+                  copiedResult = await CopyPlugin.glob(
+                    globby,
+                    compiler,
+                    compilation,
+                    logger,
+                    cache,
+                    concurrency,
+                    /** @type {ObjectPattern & { context: string }} */
+                    (singlePattern),
+                    index,
+                  );
+                } catch (error) {
+                  compilation.errors.push(/** @type {Error} */ (error));
+
+                  return;
+                }
               }
 
               if (!copiedResult) {
