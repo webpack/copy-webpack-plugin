@@ -1,0 +1,27 @@
+{
+  "patches": {
+    "pkg:npm/shell-quote@1.8.3": {
+      "uuid": "7e947070-90ed-4a05-988b-19b2efa7e40f",
+      "exportedAt": "Thu, 23 Jul 2026 16:13:01 GMT",
+      "files": {
+        "quote.js": {
+          "beforeHash": "2d2f2a9cc9c6c6f8960bc45c90cb8d22ff878b1cf3a2ca249f22b2076acb5cd3",
+          "afterHash": "cf137993d06cc11c10400f7f9ecc469fae6050e41bf4d5ffd29ed8730b8e7532"
+        }
+      },
+      "vulnerabilities": {
+        "GHSA-w7jw-789q-3m8p": {
+          "cves": [
+            "CVE-2026-9277"
+          ],
+          "summary": "shell-quote quote() does not escape newlines in object .op values",
+          "severity": "CRITICAL",
+          "description": "### Summary\n\n`shell-quote`'s `quote()` function did not validate object-token inputs against the operator model used by `parse()`. The `.op` field was backslash-escaped character by character using `/(.)/g`, which in JavaScript does not match line terminators (`\\n`, `\\r`, U+2028, U+2029). A line terminator in `.op` therefore passed through unescaped into the output; POSIX shells treat a literal `\\n` as a command separator, so any content after it would execute as a second command.\n\nThe vulnerable code path is reachable in two ways. Neither requires the parser to misbehave — `parse()` only emits ops from a fixed control set — but both are documented API surface:\n\n1. **Direct construction.** A caller builds `{ op: '...\\n...' }` from external input (e.g. a deserialized argument array) and passes it to `quote()`.\n2. **`envFn` return.** `parse(cmd, envFn)` is documented to splice the return value of `envFn` into the result array when it is an object. An attacker-influenced data source consulted by `envFn` can introduce an object token whose `.op` reaches `quote()`.\n\n### Impact\n\nShell command injection in callers that pass object tokens with attacker-influenced `.op` values to `quote()` and then hand the result to a shell. The preconditions are narrower than ordinary string injection — they require the caller to feed object tokens into `quote()` — but object tokens are a public, documented part of the API surface, and `quote()` is intended to be a shell-safety boundary.\n\n### PoC\n\n```js\nconst { parse, quote } = require('shell-quote');\n\n// Direct construction\nquote([{ op: ';\\nid' }]);\n// → \"\\;\\n\\\\i\\\\d\"  ← literal newline; second line executes as a command\n\n// Via parse() with an envFn returning attacker-shaped objects\nconst tokens = parse('echo $X', () => ({ op: ';\\nid' }));\nrequire('child_process').execSync(quote(tokens), { shell: true });\n// Executes `id` after `echo \\;`.\n```\n\nConfirmed under `sh`, `bash`, `dash`, and `zsh`.\n\n### Patch\n\nFixed by replacing the per-character escape with strict shape validation in `quote()`. The object-token branch now:\n\n- **`{ op }`** — `.op` must be a string from the same allowlist the parser emits (`||`, `&&`, `;;`, `|&`, `<(`, `<<<`, `>>`, `>&`, `<&`, `&`, `;`, `(`, `)`, `|`, `<`, `>`). Anything else throws `TypeError`. This is the direct fix for the reported issue and removes the entire class of `.op` injection.\n- **`{ op: 'glob', pattern }`** — `.pattern` must be a string with no line terminators. Glob metacharacters (`*`, `?`, `[`, `]`, `{`, `}`, `,`) pass through; all other shell-special characters are backslash-escaped. (Previously the pattern field was discarded entirely and the literal string `\\g\\l\\o\\b` was emitted — a latent bug, not security-relevant.)\n- **`{ comment }`** — `.comment` must be a string with no line terminators (line terminators would end the shell comment and resume command parsing — same injection shape).\n- **Any other object shape** — `TypeError`.\n\nThe fix is allowlist-based rather than a targeted regex tweak, so it closes the reported vector and forecloses adjacent ones (U+2028 / U+2029 line separators in `.op`, line terminators in comments, unknown-shape objects coerced through `.replace`).\n\n### Workarounds\n\nPrior to upgrading, callers that build object tokens from untrusted input should validate `.op` against the parser's operator set themselves, and never construct `{ op }` from attacker-controlled strings.\n\n### Credits\n\nReported by Akshat Sinha"
+        }
+      },
+      "description": "",
+      "license": "",
+      "tier": "free"
+    }
+  }
+}
