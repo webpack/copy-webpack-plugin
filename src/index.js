@@ -143,6 +143,36 @@ const getTinyGlobby = memoize(() => require("tinyglobby"));
 
 const PLUGIN_NAME = "CopyPlugin";
 
+const DEPRECATION_MESSAGE = `copy-webpack-plugin is deprecated: webpack copies files itself since 5.111.0, through the 'output.copy' option and the 'webpack.CopyPlugin' behind it.
+Migration guide: https://github.com/webpack/copy-webpack-plugin#deprecated
+Example: https://github.com/webpack/webpack/tree/main/examples/output-copy`;
+
+let deprecationWarned = false;
+
+/**
+ * Warns once per process that webpack copies files on its own. A webpack too
+ * old to do it has nothing to migrate to, so it is left alone.
+ * @param {Compiler} compiler the compiler
+ * @returns {void}
+ */
+function warnDeprecated(compiler) {
+  if (
+    deprecationWarned ||
+    !compiler.webpack ||
+    !("CopyPlugin" in compiler.webpack)
+  ) {
+    return;
+  }
+
+  deprecationWarned = true;
+
+  process.emitWarning(
+    DEPRECATION_MESSAGE,
+    "DeprecationWarning",
+    "DEP_COPY_WEBPACK_PLUGIN",
+  );
+}
+
 class CopyPlugin {
   /**
    * @param {PluginOptions=} options options for the plugin
@@ -818,6 +848,8 @@ class CopyPlugin {
    */
   apply(compiler) {
     const pluginName = this.constructor.name;
+
+    warnDeprecated(compiler);
 
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
       const logger = compilation.getLogger("copy-webpack-plugin");
