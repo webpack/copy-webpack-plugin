@@ -16,6 +16,72 @@
 
 Copies existing individual files or entire directories to the build directory.
 
+## Deprecated
+
+> [!WARNING]
+>
+> This plugin is deprecated. webpack copies files itself since **5.111.0**, through the [`output.copy`](https://webpack.js.org/configuration/output/#outputcopy) option and the `webpack.CopyPlugin` behind it, so this package is no longer needed there. It stays published and keeps working, and it remains the answer for webpack 5 releases older than 5.111.0, but new options land in webpack rather than here.
+
+Using a webpack that has it, this is the whole migration:
+
+```diff
+- const CopyPlugin = require("copy-webpack-plugin");
+-
+  module.exports = {
+-   plugins: [
+-     new CopyPlugin({
+-       patterns: [{ from: "static", to: "public" }],
+-     }),
+-   ],
++   output: {
++     copy: [{ from: "static", to: "public" }],
++   },
+  };
+```
+
+`output.copy` takes the patterns directly — a single string is one of them, so `copy: "static"` is a whole configuration. `concurrency` and the `processAssets` `stage` live on the plugin instead, for the builds that set them:
+
+```js
+const { Compilation, CopyPlugin } = require("webpack");
+
+module.exports = {
+  plugins: [
+    new CopyPlugin({
+      patterns: ["static"],
+      concurrency: 50,
+      stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+    }),
+  ],
+};
+```
+
+`stage` decides which asset-processing taps see the copied files. It is not how a file is kept out of the minimizer — that one re-runs for assets added at any later stage, so `info: { minimized: true }` is still the way, exactly as it is here.
+
+A [worked example](https://github.com/webpack/webpack/tree/main/examples/output-copy) covers both forms, the pattern options and that second pass.
+
+### What each option becomes
+
+| This plugin           | `output.copy`                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `patterns`            | `output.copy` itself                                                               |
+| `from`                | `from`                                                                             |
+| `to`                  | `to`, which may be a function of the copied file                                   |
+| `context`             | `context`                                                                          |
+| `globOptions`         | `globOptions` — `caseSensitive`, `deep`, `dot`, `followSymlinks`, `ignore`         |
+| `info`                | `info`                                                                             |
+| `transform`           | `transform`                                                                        |
+| `toType`              | read from `to`; use `filename` for a template                                      |
+| `filter`              | `globOptions.ignore`                                                               |
+| `noErrorOnMissing`    | the default — a pattern matching nothing warns rather than fails                   |
+| `options.concurrency` | `new CopyPlugin({ concurrency })`                                                  |
+| `priority`            | patterns are applied in order, and a later one replaces what an earlier one copied |
+| `force`               | no equivalent: copying onto an asset the compilation emits is an error             |
+| `transformAll`        | no equivalent — see below                                                          |
+
+Three pattern options have no counterpart here, because webpack grew them rather than inheriting them: `filename` (a webpack filename template, so one pattern can rename, flatten and hash), `preservePermissions` and `preserveTimestamps`.
+
+`transformAll` merged several sources into one asset, which `output.copy` deliberately does not do — one source file becomes one asset there, so merging is a second pass over what it emitted. The [example](https://github.com/webpack/webpack/tree/main/examples/output-copy) carries that second pass as a ~30-line plugin, caching included.
+
 ## Getting Started
 
 To begin, you'll need to install `copy-webpack-plugin`:
